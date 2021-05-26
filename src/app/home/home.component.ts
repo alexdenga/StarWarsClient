@@ -67,7 +67,6 @@ export class HomeComponent implements OnInit {
     this.apollo.watchQuery({
       query: gql`${query}`,
     }).valueChanges.subscribe((result: any) => {
-      console.log(result)
   this.people = result.data.allPeopleByPage.results;
   this.loading = result.loading;
   this.error = result.error; 
