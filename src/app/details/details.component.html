@@ -2,7 +2,6 @@
     <div class="px-4 py-5 my-5 text-center">
         <img src="assets/avatar.png" width="100" class="rounded-circle" />
       <h5 style="margin: 10px;">{{ name }}</h5>
-      <p class="font">A long time ago in a galaxy far, far away,<br> Luke Skywalker and a heroic group of Rebels battled Darth Vader and the evil forces of the Galactic Empire...</p>
       <div class="col-lg-6 mx-auto">
         <p style="text-align: center;"><span *ngIf="loading"  class="spinner-border text-primary" role="status"></span></p> 
         <ul *ngIf="loading === false" class="list-group font">
@@ -12,7 +11,7 @@
             <li class="list-group-item"><b>Home World</b><br> {{ homeworld }}</li>
           </ul>
         <div style="margin: 10px 0 0 0;" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <a routerLink="/"><button type="button" class="btn btn-secondary btn-sm">Back Home</button></a>
+          <a routerLink="/"><button type="button" class="btn btn-secondary btn-sm">Go Back Home</button></a>
         </div>
       </div>
     </div>

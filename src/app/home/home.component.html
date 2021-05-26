@@ -8,8 +8,8 @@
   <div class="container-fluid">
     <div class="row">
       <main class="col-md-12">
-        <p>Star Wars Characters <span class="small" *ngIf="people" >({{ count }})</span></p>
-        <div *ngIf="people" class="table-responsive font">
+        <p>Star Wars Characters <span class="small" *ngIf="people && loading == false" >( Total {{ count }} )</span></p>
+        <div *ngIf="people && loading == false" class="table-responsive font">
           <table class="table table-bordered table-striped table-hover table-dark">
             <thead>
               <tr>
@@ -32,17 +32,18 @@
               </tr>
             </tbody>
           </table>
-          <p style="text-align: center;"><span *ngIf="loading"  class="spinner-border text-primary" role="status"></span></p> 
-          <div *ngIf="error" class="alert alert-danger" role="alert">
-            Something wen't wrong, please try again later!
-          </div>
-          <nav *ngIf="people.length > 0">
-            <ul class="pagination">
-              <li *ngIf="previous !== null" class="page-item"><a class="page-link" (click)="paginate(previous)" style="cursor: pointer;">Previous</a></li>
-              <li class="page-item"><a class="page-link" (click)="paginate(next)" style="cursor: pointer;">Next</a></li>
-            </ul>
-          </nav>
         </div>
+        <p style="margin: 0;" style="font-size: 10px;" *ngIf="page_id > 0 && loading == false" class="small">Page {{ page_id }}</p>
+        <p style="text-align: center;"><span *ngIf="loading"  class="spinner-border text-primary" role="status"></span></p> 
+        <div *ngIf="error" class="alert alert-danger font" role="alert">
+          Something wen't wrong, please try again later!
+        </div>
+        <nav *ngIf="people.length > 0 && loading == false" class="font">
+          <ul class="pagination">
+            <li *ngIf="previous !== null" class="page-item"><a class="page-link" (click)="paginate(previous)" style="cursor: pointer;">Previous</a></li>
+            <li class="page-item"><a class="page-link" (click)="paginate(next)" style="cursor: pointer;">Next</a></li>
+          </ul>
+        </nav>
       </main>
     </div>
   </div>

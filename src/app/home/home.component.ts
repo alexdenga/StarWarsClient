@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   count: number = 0;
   next: string = '';
   previous: string = '';
+  page_id: any;
   constructor(
     private apollo: Apollo
   ) { }
@@ -35,8 +36,7 @@ export class HomeComponent implements OnInit {
           }
         }
       `,
-    })
-    .valueChanges.subscribe((result: any) => {
+    }).valueChanges.subscribe((result: any) => {
       this.people = result.data.allPeople.results;
       this.loading = result.loading;
       this.error = result.error; 
@@ -47,29 +47,28 @@ export class HomeComponent implements OnInit {
   }
 
   public paginate(link: string) {
+    this.loading = true;
     const last = require('lodash.last');
-    const id = last(link);
-    this.apollo.watchQuery({query: gql`
-    {
-         allPeopleByPage(page:$id){
-          count,
-          next,
-          previous,
-            results {
-              name,
-              gender,
-              mass,
-              height,
-              homeworld
-    }
-    }
-    }
-  `,
-  variables: { id: id},
-})
-.valueChanges.subscribe((result: any) => {
-  console.log(result);
- this.people = result.data.allPeopleByPage.results;
+    this.page_id = last(link);
+    const query = `{
+      allPeopleByPage(page:${this.page_id}){
+        count,
+        next,
+        previous,
+          results {
+            name,
+            gender,
+            mass,
+            height,
+            homeworld
+  }
+  }
+  }`
+    this.apollo.watchQuery({
+      query: gql`${query}`,
+    }).valueChanges.subscribe((result: any) => {
+      console.log(result)
+  this.people = result.data.allPeopleByPage.results;
   this.loading = result.loading;
   this.error = result.error; 
   this.count = result.data.allPeopleByPage.count;

@@ -20,33 +20,30 @@ export class DetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams
-    .subscribe((params: any) => {
+    this.route.queryParams.subscribe((params: any) => {
       this.name = params.name;
+      const query = `{
+        personDetails(search: "${params.name}"){
+                results {
+                  name,
+                  gender,
+                  mass,
+                  height,
+                  homeworld
+      }
+      }
+      }`;
+      this.apollo.watchQuery({query: gql`${query}`,
+  }).valueChanges.subscribe((result: any) => {
+    this.loading = result.loading;
+    this.error = result.error; 
+    this.gender = result.data.personDetails.results[0].gender;
+    this.mass = result.data.personDetails.results[0].mass;
+    this.height = result.data.personDetails.results[0].height;
+    this.homeworld = result.data.personDetails.results[0].homeworld;
+  });
     }
   );
-       this.apollo.watchQuery({query: gql`
-        {
-          personDetails(search:"Anakin Skywalker"){
-                  results {
-                    name,
-                    gender,
-                    mass,
-                    height,
-                    homeworld
-        }
-        }
-        }
-      `,
-    })
-    .valueChanges.subscribe((result: any) => {
-      this.loading = result.loading;
-      this.error = result.error; 
-      this.gender = result.data.personDetails.results[0].gender;
-      this.mass = result.data.personDetails.results[0].mass;
-      this.height = result.data.personDetails.results[0].height;
-      this.homeworld = result.data.personDetails.results[0].homeworld;
-    });
   }
 
 }
