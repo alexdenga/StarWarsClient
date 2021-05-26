@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    font-family: 'Varela Round', sans-serif;
+}
+.page-link {
+    color: #01398c;
+}
+@media (min-width: 992px){
+    .container {
+        width: 860px!important;
+    }
+}
+.lift {
+    box-shadow: 0 10px 50px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+}
+.font {
+    font-size: 12px;
+}

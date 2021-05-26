@@ -1,1 +1,49 @@
-<p>home works!</p>
+<div class="container lift">
+  <div class="mb-4 bg-light rounded-3">
+    <div style="padding: 25px;" class="container-fluid">
+      <h2 style="font-weight: bold;">Star Wars GraphQL</h2>
+      <p style="font-size: 14px;" class="col-md-8">The Star Wars API, or "swapi" (Swah-pee) is the world's first quantified and programmatically-accessible data source for all the data from the Star Wars canon universe!</p>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <main class="col-md-12">
+        <p>Star Wars Characters <span class="small" *ngIf="people" >({{ count }})</span></p>
+        <div *ngIf="people" class="table-responsive font">
+          <table class="table table-bordered table-striped table-hover table-dark">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Height</th>
+                <th>Mass</th>
+                <th>Gender</th>
+                <th>Home World</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let person of people">
+                <td><a style=" color: #fff;text-decoration: none;" [routerLink]="['/details']" [queryParams]="{ name: person.name}">{{ person.name | uppercase }}</a></td>
+                <td>{{ person.height }}</td>
+                <td>{{ person.mass }}</td>
+                <td>{{ person.gender }}</td>
+                <td>{{ person.homeworld }}</td>
+                <td><a [routerLink]="['/details']" [queryParams]="{ name: person.name}"><button class="btn btn-secondary btn-sm font">View</button></a></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align: center;"><span *ngIf="loading"  class="spinner-border text-primary" role="status"></span></p> 
+          <div *ngIf="error" class="alert alert-danger" role="alert">
+            Something wen't wrong, please try again later!
+          </div>
+          <nav *ngIf="people.length > 0">
+            <ul class="pagination">
+              <li *ngIf="previous !== null" class="page-item"><a class="page-link" (click)="paginate(previous)" style="cursor: pointer;">Previous</a></li>
+              <li class="page-item"><a class="page-link" (click)="paginate(next)" style="cursor: pointer;">Next</a></li>
+            </ul>
+          </nav>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
